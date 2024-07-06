@@ -15,6 +15,7 @@ interface Job {
   recruiterName: string;
   recruiterPhone: string;
   recruiterEmail: string;
+  uploadedDate: string;
 }
 
 const Jobs = () => {

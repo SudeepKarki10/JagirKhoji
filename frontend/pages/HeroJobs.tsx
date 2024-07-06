@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import JobRow from "../../../components/JobRow";
+import JobRow from "../app/components/JobRow";
 
 interface Job {
   _id: string;
@@ -20,26 +20,21 @@ interface Job {
   uploadedDate: string;
 }
 
-const Jobs = () => {
+const HeroJobs = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:4000/user/postedjobs", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch("http://localhost:4000/");
 
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }
         const data = await response.json();
-        // Access the data property in the response
+
         // Calculate uploadedDate for each job
         const updatedJobs = data.data.map((job: Job) => ({
           ...job,
@@ -47,6 +42,7 @@ const Jobs = () => {
         }));
 
         setJobs(updatedJobs);
+        console.log(jobs);
         setLoading(false);
       } catch (error: any) {
         setError(error.message);
@@ -82,19 +78,15 @@ const Jobs = () => {
   };
 
   return (
-    <div className="bg-stone-100 px-2 sm:px-8 py-4 mt-10 sm:mt-32 md:mt-60 h-screen">
+    <div className="bg-stone-100 px-2 sm:px-8 py-4 mt-10 md:mt-4">
       <h3 className="text-lg font-medium text-gray-600 text-center sm:text-left">
-        Posted Jobs
+        Recent Jobs
       </h3>
-      {jobs.length == 0 ? (
-        <div className="flex justify-center items-center mt-10 md:mt-40">
-          You haven&apos;t Posted any jobs yet...
-        </div>
-      ) : (
-        jobs.map((job) => <JobRow key={job._id} job={job} />)
-      )}
+      {jobs.map((job) => (
+        <JobRow key={job._id} job={job} />
+      ))}
     </div>
   );
 };
 
-export default Jobs;
+export default HeroJobs;

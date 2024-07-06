@@ -6,10 +6,9 @@ const requireAuth = require("../middleware/authMiddleware");
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(requireAuth); // Protect all routes below
 router.get("/", async (req, res) => {
   try {
-    const JobData = await JobCollection.find();
+    const JobData = await JobCollection.find().sort({ updatedAt: -1 });
     // if (!JobData) {
     //   res.status(404).send({ message: "No Data Found" });
     // }

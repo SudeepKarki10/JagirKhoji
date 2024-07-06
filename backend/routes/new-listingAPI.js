@@ -6,13 +6,14 @@ const requireAuth = require("../middleware/authMiddleware");
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use(requireAuth); // Protect all routes below
+router.use(requireAuth); // Protect all routes below this is extra layer of route protection using express
 
-router.post("/", async (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   try {
     const jobData = req.body;
 
     if (jobData) {
+      jobData.user_id = req.user._id; // Add user ID to job data
       const JobDetails = await JobCollection.insertMany(jobData);
       res
         .status(200)

@@ -29,12 +29,15 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+const allPostedJobsRoute = require("./routes/allpostedjobsAPI");
+app.use("/", allPostedJobsRoute);
+
 const jobsListingRoute = require("./routes/new-listingAPI");
 
 //app.use with first parameter new-listing means that all the request from /new-listing wil be handled by jobsRoute module
 app.use("/new-listing", jobsListingRoute);
 
-const userpostedJobsRoute = require("./routes/postedjobsAPI");
+const userpostedJobsRoute = require("./routes/userpostedjobsAPI");
 
 app.use("/user/postedjobs", userpostedJobsRoute);
 

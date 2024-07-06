@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Hero from "./components/Hero";
-import Jobs from "./components/Jobs";
+import HeroJobs from "../pages/HeroJobs";
 
 export default function Home() {
   return (
     <div>
       <Hero />
-      <Jobs />
+      <HeroJobs />
     </div>
   );
 }

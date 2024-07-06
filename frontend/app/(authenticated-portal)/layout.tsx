@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import AuthProvider from "../auth/Provider";
+
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -17,9 +18,11 @@ export default function RootLayout({
 
   const [status, setStatus] = useState("pending");
 
-  const token = localStorage.getItem("token");
+  //we cannot access token on serverside
+  //const token = localStorage.getItem("token");
 
   useEffect(() => {
+    //ass useEffect runs on client side on we can access token here solving error
     const token = localStorage.getItem("token");
     if (token) {
       setStatus("authenticated");
@@ -49,24 +52,25 @@ export default function RootLayout({
 
   if (status === "unauthenticated") {
     // signIn("google");
-    // // redirect("/api/auth/signin");
-    return (
-      <div className="flex justify-center  gap-2 mt-20 flex-col">
-        <h1 className="text-xl text-white">
-          You need to be logged in to perform this action.
-        </h1>{" "}
-        <Link
-          className="bg-blue-600 py-1 px-1 text-white font-bold text-md rounded-md w-fit cursor-pointer"
-          // onClick={() => {
-          //   signIn("google");
-          // }
-          // }
-          href="/login"
-        >
-          Login now
-        </Link>
-      </div>
-    );
+    // redirect("/api/auth/signin");
+    redirect("/login");
+    // return (
+    //   <div className="flex justify-center  gap-2 mt-20 flex-col">
+    //     <h1 className="text-xl text-white">
+    //       You need to be logged in to perform this action.
+    //     </h1>{" "}
+    //     <Link
+    //       className="bg-blue-600 py-1 px-1 text-white font-bold text-md rounded-md w-fit cursor-pointer"
+    //       // onClick={() => {
+    //       //   signIn("google");
+    //       // }
+    //       // }
+    //       href="/login"
+    //     >
+    //       Login now
+    //     </Link>
+    //   </div>
+    // );
   } else {
     // console.log("Session data:", session);
 

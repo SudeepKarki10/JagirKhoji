@@ -42,12 +42,20 @@ export default function NewListingPage() {
       userprofileURL: userprofileURL,
     };
 
+    const token = localStorage.getItem("token"); // Retrieve the token from local storage
+
+    if (!token) {
+      toast.error("Authentication token not found");
+      return;
+    }
+
     console.log(formData);
     try {
       const response = await fetch("http://localhost:4000/new-listing", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });

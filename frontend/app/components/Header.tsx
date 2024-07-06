@@ -81,16 +81,19 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       // Decode the token to get user info
       const user = JSON.parse(atob(token.split(".")[1]));
+      console.log(user);
       setIsAuthenticated(true);
       setUser(user);
     }
@@ -101,6 +104,7 @@ const Header = () => {
     setIsAuthenticated(false);
     setUser(null);
     // Redirect to home page
+    router.push("/");
   };
 
   return (
@@ -112,7 +116,7 @@ const Header = () => {
           </Link>
 
           <div className="flex gap-2 text-white">
-            <Link href="/" className="hover:text-gray-400">
+            <Link href="/" passHref className="hover:text-gray-400">
               Home
             </Link>
             <Link href="/user/postedjobs" className="hover:text-gray-400">
@@ -133,7 +137,7 @@ const Header = () => {
             ) : (
               <>
                 <div className="content-center text-white">
-                  {user ? `👋sudeep` : "Loading..."}
+                  {user ? `👋 Sudip` : "Loading..."}
                 </div>
                 <button
                   className="bg-gray-300 px-4 py-2 cursor-pointer"

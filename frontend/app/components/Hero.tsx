@@ -26,7 +26,7 @@ const Hero = () => {
       </form>
 
       <div className="flex flex-row justify-center items-center gap-4 h-20">
-        <p className="font-base text-zinc-600"> 1000+ Jobs </p>
+        <p className="font-base text-zinc-300"> 1000+ Jobs </p>
 
         <div className="flex flex-row gap-0">
           <Image

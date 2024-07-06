@@ -13,7 +13,7 @@ const jobSchema = new mongoose.Schema(
     recruiterName: String,
     recruiterPhone: String,
     recruiterEmail: String,
-    // user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // to link each job with particular user
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // to link each job with particular user
   },
   { timestamps: true }
 );
