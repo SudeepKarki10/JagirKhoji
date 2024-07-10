@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import JobRow from "../app/components/JobRow";
+import ContentLoader from "../app/components/contentLoader";
 
 interface Job {
   _id: string;
@@ -77,11 +78,30 @@ const HeroJobs = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="bg-stone-100 px-2 sm:px-8 py-4 mt-10 md:mt-4">
+        <h3 className="text-lg font-medium text-gray-600 text-center sm:text-left">
+          Recent Jobs
+        </h3>
+        <div className="flex flex-col gap-4  rounded-lg border py-4 text-gray-700 shadow transition hover:shadow-lg mx-2  bg-white grow pl-2 mt-6">
+          <div className="flex items-center justify-center ">
+            <ContentLoader id={1} />
+          </div>
+          <div className="flex items-center justify-center ">
+            <ContentLoader id={2} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-stone-100 px-2 sm:px-8 py-4 mt-10 md:mt-4">
       <h3 className="text-lg font-medium text-gray-600 text-center sm:text-left">
         Recent Jobs
       </h3>
+
       {jobs.map((job) => (
         <JobRow key={job._id} job={job} />
       ))}

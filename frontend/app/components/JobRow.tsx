@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Fallbackimg from "../../public/fallback.png";
@@ -18,6 +18,7 @@ interface Props {
     recruiterPhone: string;
     recruiterEmail: string;
     uploadedDate: string;
+    user_id: Object;
   };
 }
 
@@ -33,8 +34,14 @@ const JobRow: React.FC<Props> = ({ job }) => {
     return text;
   };
 
+  // useEffect(() => {
+  //   console.log(job);
+  // }, []);
+
   return (
-    <Link href={`/job/${job._id}`}>
+    <Link
+      href={`/jobdetails/${job._id}?u_id=${job.user_id}&company=${job.companyName}`}
+    >
       <div className="flex flex-col md:flex-row gap-4  rounded-lg border py-4 text-gray-700 shadow transition hover:shadow-lg mx-2  bg-white grow pl-2 mt-6">
         <div className="flex items-center justify-center relative h-40 md:h-40 w-full  md:w-1/4  rounded-sm ">
           {job.companylogoURL ? (

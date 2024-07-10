@@ -32,6 +32,9 @@ app.listen(PORT, () => {
 const allPostedJobsRoute = require("./routes/allpostedjobsAPI");
 app.use("/", allPostedJobsRoute);
 
+const singleJobDetailsRoute = require("./routes/singleJobDetailAPI");
+app.use("/jobdetails", singleJobDetailsRoute);
+
 const jobsListingRoute = require("./routes/new-listingAPI");
 
 //app.use with first parameter new-listing means that all the request from /new-listing wil be handled by jobsRoute module
