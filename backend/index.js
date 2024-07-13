@@ -48,3 +48,6 @@ app.use("/user/postedjobs", userpostedJobsRoute);
 
 const UserLoginSignupRoute = require("./routes/userRoutes");
 app.use("/api", UserLoginSignupRoute);
+
+const userDataRoute = require("./routes/userDetailsAPI");
+app.use("/userdetails", userDataRoute);

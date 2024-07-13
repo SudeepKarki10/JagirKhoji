@@ -204,7 +204,9 @@ export default function NewListingPage() {
                 focus:ring-opacity-50
               "
             >
-              <option>Salary Range</option>
+              <option value="" disabled>
+                Salary Range
+              </option>
               <option value="<10">Below 10k</option>
               <option value="10-20">10-20k</option>
               <option value="20-40">20-40k</option>

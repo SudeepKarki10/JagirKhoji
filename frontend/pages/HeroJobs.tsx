@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import JobRow from "../app/components/JobRow";
 import ContentLoader from "../app/components/contentLoader";
+
 interface Job {
   _id: string;
   companyName: string;
@@ -65,21 +66,30 @@ const HeroJobs = () => {
     switch (filterType) {
       case "search":
         setSearch(value);
+        localStorage.setItem("search", value);
         break;
       case "location":
         setLocation(value);
+        localStorage.setItem("location", value);
         break;
       case "experience":
         setExperience(value);
+        localStorage.setItem("experience", value);
+        console.log(experience);
         break;
       case "salaryRange":
         setSalaryRange(value);
+        localStorage.setItem("salaryRange", value);
+        experience;
+        console.log(salaryRange);
         break;
       case "jobType":
-        setJobType(value);
+        setJobType((prevJobType) => (prevJobType === value ? "" : value));
+        localStorage.setItem("jobType", value);
         break;
       case "jobTiming":
-        setJobTiming(value);
+        setJobTiming((preJobTiming) => (preJobTiming === value ? "" : value));
+        localStorage.setItem("jobTiming", value);
         break;
       default:
         break;
@@ -197,24 +207,24 @@ const HeroJobs = () => {
             onChange={(e) => handleFilterChange("experience", e.target.value)}
           >
             <option>experience</option>
-            <option value="Freshers">Freshers</option>
-            <option value="1-3 years">1-3 years</option>
-            <option value="3-5 years">3-5 years</option>
-            <option value="more than 5 years">More than 5 years</option>
+            <option value="0">Freshers</option>
+            <option value="1-3">1-3 years</option>
+            <option value="3-5">3-5 years</option>
+            <option value="<5">More than 5 years</option>
           </select>
 
-          {/* Salary Range Slider */}
+          {/* Salary Range filter */}
           <select
             className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-6/12 md:w-2/12 mb-3 md:mb-0"
             value={salaryRange}
             onChange={(e) => handleFilterChange("salaryRange", e.target.value)}
           >
-            <option>Salary Range</option>
-            <option value="<10">Below 10k</option>
-            <option value="10-20">10-20k</option>
-            <option value="20-40">20-40k</option>
-            <option value="50-80">50-80k</option>
-            <option value="100+">More than 100k</option>
+            <option>Salary</option>
+            <option value="<10">less than 10K</option>
+            <option value="10-20">10-20K</option>
+            <option value="20-40">20-40K</option>
+            <option value="50-80">50-80K</option>
+            <option value="100+">100+K</option>
           </select>
         </div>
 

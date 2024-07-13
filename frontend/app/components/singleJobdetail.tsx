@@ -16,12 +16,14 @@ interface JobDetailsProps {
     uploadedDate: string;
     experience: string;
     salaryRange: string;
+    user_id: Object;
   };
 }
 
 const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
   if (!job) return null; // Return null if job is null
 
+  console.log(job.user_id);
   return (
     <div
       className="bg-white rounded-lg shadow-md  flex flex-col md:flex-row px-4 sm:px-10 md:px-20 pt-6 md:py-20"
@@ -73,7 +75,9 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
           </div>
           <div className="bg-purple-100  px-2 py-1 rounded-3xl flex flex-col justify-center items-center h-16 w-full md:h-32 md:w-44">
             <p className="mr-2 text-md">Experience</p>
-            <p className="text-2xl font-bold">{job.experience}</p>
+            <p className="text-2xl font-bold">
+              {job.experience === "0" ? "Freshers" : `${job.experience} years`}
+            </p>
           </div>
           <div className="bg-gray-100  px-2 py-1 rounded-3xl flex flex-col justify-center items-center h-16 w-full md:h-32 md:w-44">
             <p className="mr-2 text-md">Job Timing</p>

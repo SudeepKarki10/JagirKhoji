@@ -30,36 +30,43 @@ router.get("/", async (req, res) => {
     if (experience) {
       switch (experience) {
         case "0":
-          filter.experience = "Freshers";
+          filter.experience = "0";
           break;
         case "1-3":
-          filter.experience = "1-3 years";
+          filter.experience = "1-3";
           break;
         case "3-5":
-          filter.experience = "3-5 years";
+          filter.experience = "3-5";
           break;
         case "<5":
-          filter.experience = "More than 5 years";
+          filter.experience = "<5";
           break;
         default:
           break;
       }
     }
+    // Salary Range Filter
 
     if (salaryRange) {
-      let minSalary, maxSalary;
-      if (salaryRange.includes("+")) {
-        minSalary = parseInt(salaryRange.replace("+", "")) * 1000;
-        maxSalary = Infinity;
-      } else if (salaryRange.includes("<")) {
-        maxSalary = parseInt(salaryRange.replace("<", "")) * 1000;
-        minSalary = 0;
-      } else {
-        [minSalary, maxSalary] = salaryRange.split("-").map(Number);
-        minSalary *= 1000;
-        maxSalary *= 1000;
+      switch (salaryRange) {
+        case "<10":
+          filter.salaryRange = "<10";
+          break;
+        case "10-20":
+          filter.salaryRange = "10-20";
+          break;
+        case "20-40":
+          filter.salaryRange = "20-40";
+          break;
+        case "50-80":
+          filter.salaryRange = "50-80";
+          break;
+        case "100+":
+          filter.salaryRange = "100+";
+          break;
+        default:
+          break;
       }
-      filter.salaryRange = { $gte: minSalary, $lte: maxSalary };
     }
 
     if (jobType) {

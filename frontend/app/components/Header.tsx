@@ -89,14 +89,30 @@ const Header = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Decode the token to get user info
-      const user = JSON.parse(atob(token.split(".")[1]));
-      console.log(user);
-      setIsAuthenticated(true);
-      setUser(user);
-    }
+    const fetchUserDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const response = await fetch("http://localhost:4000/userdetails", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          setUser(data);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+        // Handle error (e.g., redirect to login page)
+      }
+    };
+
+    fetchUserDetails();
   }, []);
 
   const handleLogout = () => {
@@ -137,7 +153,7 @@ const Header = () => {
             ) : (
               <>
                 <div className="content-center text-white">
-                  {user ? `👋 Sudip` : "Loading..."}
+                  {user ? `👋,${user.username}` : "Loading..."}
                 </div>
                 <button
                   className="bg-gray-300 px-4 py-2 cursor-pointer"
