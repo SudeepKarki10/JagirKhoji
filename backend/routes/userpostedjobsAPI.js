@@ -12,7 +12,9 @@ router.get("/", requireAuth, async (req, res) => {
   try {
     //userId is generated from token and passed from frontend as header
     const userId = req.user._id;
-    const JobData = await JobCollection.find({ user_id: userId });
+    const JobData = await JobCollection.find({ user_id: userId }).sort({
+      updatedAt: -1,
+    });
     // if (!JobData) {
     //   res.status(404).send({ message: "No Data Found" });
     // }

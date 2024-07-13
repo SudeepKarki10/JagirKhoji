@@ -11,9 +11,16 @@ router.use(requireAuth); // Protect all routes below this is extra layer of rout
 router.post("/", requireAuth, async (req, res) => {
   try {
     const jobData = req.body;
+    let positionDescription = jobData.positionDescription;
+
+    let jobDescription = positionDescription
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line);
 
     if (jobData) {
       jobData.user_id = req.user._id; // Add user ID to job data
+      jobData.positionDescription = jobDescription;
       const JobDetails = await JobCollection.insertMany(jobData);
       res
         .status(200)

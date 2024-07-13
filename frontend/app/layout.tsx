@@ -36,7 +36,7 @@ export default function RootLayout({
             </ul>
           </div>
 
-          <main className=" py-4 px-4 sm:px-10 md:30 lg:px-52  w-full">
+          <main className=" py-4 px-2 sm:px-10 md:px-24 lg:px-40  w-full">
             {/* <AuthProvider> */}
             <Header />
             {children}

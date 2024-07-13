@@ -24,6 +24,7 @@ const Page = ({ params, searchParams }: any) => {
         const data = await response.json();
 
         if (response.ok) {
+          console.log(data.data);
           setJob(data.data);
           setLoading(false);
         } else {
@@ -37,7 +38,7 @@ const Page = ({ params, searchParams }: any) => {
     };
 
     fetchJobData();
-  }, [params.id]);
+  }, []);
 
   return (
     <div>
@@ -49,12 +50,12 @@ const Page = ({ params, searchParams }: any) => {
 
       {loading ? (
         <div className="grid place-items-center mt-20 bg-zinc-200 px-4 py-8 h-full rounded-md">
-          <ContentLoader />
+          <ContentLoader width={800} height={800} />
         </div>
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : (
-        <div className="w-full my-8">
+        <div className="w-full my-32 h-96">
           <JobDetails job={job} />
         </div>
       )}

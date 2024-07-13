@@ -18,6 +18,9 @@ type Inputs = {
   recruiterName: string;
   recruiterPhone: string;
   recruiterEmail: string;
+  recruiterPosition: string;
+  experience: string;
+  salaryRange: string;
 };
 
 export default function NewListingPage() {
@@ -75,7 +78,7 @@ export default function NewListingPage() {
   };
 
   return (
-    <div className="w-full md:w-8/12 md:max-w-full mx-auto mt-16">
+    <div className="w-full md:w-10/12 md:max-w-full mx-auto mt-28">
       <div className="p-6 border border-gray-300 sm:rounded-md  bg-white">
         <ToastContainer />
         <div className="flex justify-center items-center mb-10 text-2xl font-extrabold font-serif text-black">
@@ -154,6 +157,65 @@ export default function NewListingPage() {
               placeholder="Node.js Developer, Python Developer, Manager, etc."
             />
           </label>
+          {/* Experience Dropdown */}
+          <label className="block mb-6">
+            <span className="text-gray-700">Experience</span>
+            <select
+              {...register("experience", { required: true })}
+              className="
+                block
+                w-full
+                mt-1
+                border-gray-300
+                rounded-md
+                shadow-sm
+                focus:border-indigo-300
+                focus:ring
+                focus:ring-indigo-200
+                focus:ring-opacity-50
+              "
+            >
+              <option>Experience</option>
+              <option value="0">Freshers</option>
+              <option value="1-3">1-3 years</option>
+              <option value="3-5">3-5 years</option>
+              <option value="<5">More than 5 years</option>
+            </select>
+            {errors.experience && (
+              <span className="text-red-500">Experience is required</span>
+            )}
+          </label>
+
+          {/* Salary Range Dropdown */}
+          <label className="block mb-6">
+            <span className="text-gray-700">Salary Range</span>
+            <select
+              {...register("salaryRange", { required: true })}
+              className="
+                block
+                w-full
+                mt-1
+                border-gray-300
+                rounded-md
+                shadow-sm
+                focus:border-indigo-300
+                focus:ring
+                focus:ring-indigo-200
+                focus:ring-opacity-50
+              "
+            >
+              <option>Salary Range</option>
+              <option value="<10">Below 10k</option>
+              <option value="10-20">10-20k</option>
+              <option value="20-40">20-40k</option>
+              <option value="50-80">50-80k</option>
+              <option value="100+">More than 100k</option>
+            </select>
+            {errors.salaryRange && (
+              <span className="text-red-500">Salary Range is required</span>
+            )}
+          </label>
+
           <label className="block mb-6">
             <span className="text-gray-700">Job Type</span>
             <select
@@ -198,6 +260,7 @@ export default function NewListingPage() {
             >
               <option value="Full">Full-time</option>
               <option value="Part">Part-time</option>
+              <option value="Flexible">flexible</option>
             </select>
             {errors.jobTiming && (
               <span className="text-red-500">Job Timing is required</span>
@@ -234,18 +297,18 @@ export default function NewListingPage() {
               [Some qualifications you may want to include are Skills, Education, Experience, or Certifications.]Example: Excellent verbal and written communication sfasfkills"
             />
           </label>
-          <div className="w-full flex flex-col md:flex-row gap-28">
-            <div className="companyImage w-full md:w-1/2">
+          <div className="w-full flex flex-col md:flex-row gap-10">
+            <div className="companyImage w-full md:w-4/12">
               <label className="block mb-6">
                 <span className="text-gray-700">Company Logo</span>
                 <br />
-                <div className="bg-slate-400 h-24 w-full border-2 border-blue-300 flex justify-center text-white items-center">
+                <div className="bg-slate-400 h-40 w-full border-2 border-blue-300 flex justify-center text-white items-center">
                   {companylogoURL ? (
                     <Image
                       src={companylogoURL}
                       alt="companyLogo"
                       width={100}
-                      height={100}
+                      height={200}
                     />
                   ) : (
                     <span>No Logo</span>
@@ -275,7 +338,7 @@ export default function NewListingPage() {
                     return (
                       <button
                         onClick={() => open()}
-                        className="bg-blue-600 mt-2 w-full rounded-md text-white px-2 py-2"
+                        className="bg-gray-900 mt-2 w-full rounded-md text-white px-2 py-2"
                       >
                         Choose File
                       </button>
@@ -289,13 +352,13 @@ export default function NewListingPage() {
               </label>
             </div>
 
-            <div className="ImageSection flex flex-col md:flex-row gap-4 justify-center items-center w-full md:w-1/2">
-              <div className="left w-full md:w-4/12">
+            <div className="ImageSection flex flex-col md:flex-row gap-4  w-full md:w-1/2">
+              <div className="left w-full ">
                 <div className="companyImage">
                   <label className="block mb-6">
                     <span className="text-gray-700">Recruiter Profile</span>
                     <br />
-                    <div className="bg-slate-400 h-24 w-full border-2 border-blue-300 flex justify-center text-white items-center">
+                    <div className="bg-slate-400 h-40 w-full border-2 border-blue-300 flex justify-center text-white items-center">
                       {userprofileURL ? (
                         <Image
                           src={userprofileURL}
@@ -319,7 +382,7 @@ export default function NewListingPage() {
                         return (
                           <button
                             onClick={() => open()}
-                            className="bg-blue-600 mt-2 w-full rounded-md text-white px-2 py-2"
+                            className="bg-gray-600 mt-2 w-full rounded-md text-white px-2 py-2"
                           >
                             Choose File
                           </button>
@@ -335,7 +398,8 @@ export default function NewListingPage() {
                   </label>
                 </div>
               </div>
-              <div className="right w-full md:w-8/12">
+              <div className="right w-full md:w-8/12 ">
+                <h2>Recruiter Details</h2>
                 <input
                   {...register("recruiterName", {
                     required: true,
@@ -345,14 +409,11 @@ export default function NewListingPage() {
                   className="
           block
           w-full
-          mt-1
-          border-gray-300
-          rounded-md
-          shadow-sm
-          focus:border-indigo-300
-          focus:ring
-          focus:ring-indigo-200
-          focus:ring-opacity-50
+          mt-6
+         border-gray-400
+         border-2
+         rounded-md
+         text-lg
         "
                   placeholder="Name"
                 />
@@ -367,15 +428,30 @@ export default function NewListingPage() {
           block
           w-full
           mt-1
-          border-gray-300
-          rounded-md
-          shadow-sm
-          focus:border-indigo-300
-          focus:ring
-          focus:ring-indigo-200
-          focus:ring-opacity-50
+            border-gray-400
+         border-2
+         rounded-md
+         text-lg
         "
                   placeholder="Phone number"
+                />
+
+                <input
+                  {...register("recruiterPosition", {
+                    required: true,
+                    maxLength: 10,
+                  })}
+                  type="text"
+                  className="
+          block
+          w-full
+          mt-1
+            border-gray-400
+         border-2
+         rounded-md
+         text-lg
+        "
+                  placeholder="Designation"
                 />
 
                 <input
@@ -387,15 +463,13 @@ export default function NewListingPage() {
           block
           w-full
           mt-1
-          border-gray-300
-          rounded-md
-          shadow-sm
-          focus:border-indigo-300
-          focus:ring
-          focus:ring-indigo-200
-          focus:ring-opacity-50
+         border-gray-400
+         border-2
+         rounded-md
+         text-lg
+       
         "
-                  placeholder="Email@gmail.com"
+                  placeholder="sudeep.1@gmail.com"
                 />
               </div>
             </div>
@@ -408,7 +482,7 @@ export default function NewListingPage() {
                 h-10
                 px-5
                 text-indigo-100
-                bg-indigo-700
+                bg-blue-700
                 rounded-lg
                 transition-colors
                 duration-150

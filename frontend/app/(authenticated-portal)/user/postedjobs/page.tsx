@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import JobRow from "../../../components/JobRow";
+import ContentLoader from "../../../components/contentLoader";
 
 interface Job {
   _id: string;
   companyName: string;
   companyLocation: string;
   position: string;
-  positionDescription: string;
+  positionDescription: string[];
   jobType: "Remote" | "On-site" | "Hybrid";
   jobTiming: "Full-time" | "Part-time";
   companylogoURL?: string;
@@ -81,18 +82,34 @@ const Jobs = () => {
     }
   };
 
+  if (!jobs) {
+    return (
+      <div className="flex justify-center items-center mt-10 md:mt-40">
+        <ContentLoader />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-stone-100 px-2 sm:px-8 py-4 mt-10 sm:mt-32 md:mt-60 h-screen">
       <h3 className="text-lg font-medium text-gray-600 text-center sm:text-left">
         Posted Jobs
       </h3>
-      {jobs.length == 0 ? (
-        <div className="flex justify-center items-center mt-10 md:mt-40">
-          You haven&apos;t Posted any jobs yet...
-        </div>
-      ) : (
-        jobs.map((job) => <JobRow key={job._id} job={job} />)
-      )}
+
+      <div className="w-full mt-10">
+        {jobs.length === 0 ? (
+          <div className="text-center py-8 grid place-items-center">
+            <h3 className="text-lg font-medium">No jobs found</h3>
+            <p className="text-gray-500">Post some jobs first.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4">
+            {jobs.map((job) => (
+              <JobRow key={job._id} job={job} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

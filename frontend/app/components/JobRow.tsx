@@ -9,7 +9,7 @@ interface Props {
     companyName: string;
     companyLocation: string;
     position: string;
-    positionDescription: string;
+    positionDescription: string[];
     jobType: "Remote" | "On-site" | "Hybrid";
     jobTiming: "Full-time" | "Part-time";
     companylogoURL?: string;
@@ -23,15 +23,19 @@ interface Props {
 }
 
 const JobRow: React.FC<Props> = ({ job }) => {
-  const truncateDescription = (text: string | undefined, maxLength: number) => {
-    if (!text) {
+  const truncateDescription = (
+    positionDescription: string[] | undefined,
+    maxLines: number
+  ) => {
+    if (!positionDescription || positionDescription.length === 0) {
       return "";
     }
-    if (text.length > maxLength) {
-      return text.substr(0, maxLength) + "...";
-    }
 
-    return text;
+    // Take the first `maxLines` elements
+    const truncatedLines = positionDescription.slice(0, 1);
+
+    // Join these lines into a single paragraph
+    return truncatedLines.join(" ");
   };
 
   // useEffect(() => {
@@ -89,7 +93,7 @@ const JobRow: React.FC<Props> = ({ job }) => {
             {job.position}
           </p>
           <p className="overflow-hidden pr-7 text-sm">
-            {truncateDescription(job.positionDescription, 200)}
+            {truncateDescription(job.positionDescription, 1)}
           </p>
 
           <div className=" mt-2 md:mt-5 flex flex-col flex-grow space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 space-x-0 sm:space-x-2">
