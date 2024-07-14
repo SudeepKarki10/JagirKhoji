@@ -105,7 +105,7 @@ const Jobs = () => {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {jobs.map((job) => (
-              <JobRow key={job._id} job={job} />
+              <JobRow key={job._id} job={job} iconType="Edit" />
             ))}
           </div>
         )}

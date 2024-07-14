@@ -43,8 +43,13 @@ const jobsListingRoute = require("./routes/new-listingAPI");
 app.use("/new-listing", jobsListingRoute);
 
 const userpostedJobsRoute = require("./routes/userpostedjobsAPI");
-
 app.use("/user/postedjobs", userpostedJobsRoute);
+
+const deleteuserpostedJobsRoute = require("./routes/deleteuserpostedjobsAPI");
+app.use("/user/postedjobs/delete", deleteuserpostedJobsRoute);
+
+const updateuserpostedJobsRoute = require("./routes/updateuserpostedjobsAPI");
+app.use("/user/postedjobs/update", updateuserpostedJobsRoute);
 
 const UserLoginSignupRoute = require("./routes/userRoutes");
 app.use("/api", UserLoginSignupRoute);
