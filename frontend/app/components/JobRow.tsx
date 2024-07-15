@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Fallbackimg from "../../public/fallback.png";
 import { Toaster } from "react-hot-toast";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import EditJobForm from "./EditJobForm";
 
 interface Props {
   job: {
@@ -33,6 +35,8 @@ const notify = () =>
   });
 
 const JobRow: React.FC<Props> = ({ job, iconType }) => {
+  const router = useRouter();
+
   const truncateDescription = (
     positionDescription: string[] | undefined,
     maxLines: number
@@ -48,9 +52,10 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
     return truncatedLines.join(" ");
   };
 
-  // useEffect(() => {
-  //   const response = console.log(job);
-  // }, []);
+  const handleEdit = (e: any) => {
+    e.preventDefault();
+    router.push(`/editjob/${job._id}`);
+  };
 
   const handleDelete = async (e: any, job_id: Object) => {
     e.preventDefault();
@@ -82,12 +87,59 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
   };
 
   return (
-    <>
+    <div>
       <Toaster />
+
       <Link
         href={`/jobdetails/${job._id}?u_id=${job.user_id}&company=${job.companyName}`}
       >
-        <div className="flex flex-col md:flex-row gap-4  rounded-lg border py-4 text-gray-700 shadow transition hover:shadow-lg mx-2  bg-white grow pl-2 mt-6">
+        <div className="flex flex-col md:flex-row gap-4  rounded-lg border py-4 text-gray-700 shadow transition hover:shadow-lg mx-2  bg-white grow pl-2 mt-6 relative">
+          <div className="likepost self-end absolute top-0 right-0 mt-6 mr-4">
+            {iconType === "Like" ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-heart cursor-pointer inline-block"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+              </svg>
+            ) : (
+              <div className="flex flex-col justify-center items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  className="bi bi-three-dots-vertical"
+                  viewBox="0 0 16 16"
+                  onClick={(e) => handleEdit(e)}
+                >
+                  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                </svg>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  className="bi bi-trash-fill"
+                  viewBox="0 0 16 16"
+                  onClick={(e: any) => handleDelete(e, job._id)}
+                >
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                </svg>
+              </div>
+            )}
+          </div>
+
           <div className="flex items-center justify-center relative h-40 md:h-40 w-full  md:w-1/4  rounded-sm ">
             {job.companylogoURL ? (
               <Image
@@ -110,51 +162,6 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
 
           <div className=" flex flex-col pr-0 sm:pr-8 text-left pl-0 sm:pl-4 grow  w-full md:w-8/12 ">
             <h3 className="text-sm text-gray-600">{job.companyName}</h3>
-            <div className="likepost self-end">
-              {iconType === "Like" ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-heart cursor-pointer inline-block"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                </svg>
-              ) : (
-                <>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="20"
-                    fill="currentColor"
-                    className="bi bi-three-dots-vertical"
-                    viewBox="0 0 16 16"
-                    onClick={(e: any) => handleEdit(e, job._id)}
-                  >
-                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                  </svg>
-
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-trash-fill"
-                    viewBox="0 0 16 16"
-                    onClick={(e: any) => handleDelete(e, job._id)}
-                  >
-                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                  </svg>
-                </>
-              )}
-            </div>
 
             <p className="text-sm text-gray-600 mb-2 mt-0">
               {job.recruiterName}
@@ -183,7 +190,7 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
           </div>
         </div>
       </Link>
-    </>
+    </div>
   );
 };
 

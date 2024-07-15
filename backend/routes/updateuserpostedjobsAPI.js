@@ -39,4 +39,8 @@ router.put("/", requireAuth, async (req, res) => {
   }
 });
 
+router.get("/", requireAuth, async (req, res) => {
+  res.send("hi");
+});
+
 module.exports = router;

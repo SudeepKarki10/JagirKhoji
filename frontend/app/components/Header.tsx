@@ -132,7 +132,7 @@ const Header = () => {
           </Link>
 
           <div className="flex gap-2 text-white">
-            <Link href="/" passHref className="hover:text-gray-400">
+            <Link href="/" className="hover:text-gray-400">
               Home
             </Link>
             <Link href="/user/postedjobs" className="hover:text-gray-400">

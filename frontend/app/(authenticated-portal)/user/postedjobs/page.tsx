@@ -96,7 +96,7 @@ const Jobs = () => {
         Posted Jobs
       </h3>
 
-      <div className="w-full mt-10">
+      <div className="w-full mt-10 h-screen">
         {jobs.length === 0 ? (
           <div className="text-center py-8 grid place-items-center">
             <h3 className="text-lg font-medium">No jobs found</h3>
