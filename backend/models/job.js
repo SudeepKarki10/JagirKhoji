@@ -8,7 +8,6 @@ const jobSchema = new mongoose.Schema(
     positionDescription: { type: [String], required: true },
     jobType: { type: String, required: true },
     jobTiming: { type: String, required: true },
-    companyLogo: { type: String },
     recruiterName: { type: String, required: true },
     recruiterPhone: { type: String, required: true },
     recruiterEmail: { type: String, required: true },

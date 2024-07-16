@@ -7,6 +7,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -32,7 +33,8 @@ const SignUp = () => {
       // localStorage.setItem("token", data.token);
       window.location.href = "/login";
     } else {
-      alert(data.error);
+      //alert(data.error);
+      setError(data.error);
     }
   };
 
@@ -150,7 +152,11 @@ const SignUp = () => {
           <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
             Sign Up
           </button>
-
+          {error ? (
+            <div className="text-red-600 font-medium text-md"> {error}</div>
+          ) : (
+            ""
+          )}
           <div className="mt-6 text-center ">
             <Link
               href="/login"

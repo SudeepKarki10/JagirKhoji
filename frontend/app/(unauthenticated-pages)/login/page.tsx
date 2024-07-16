@@ -6,6 +6,7 @@ import Link from "next/link";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -26,7 +27,8 @@ const Login = () => {
         // Redirect or navigate to another page on successful login
         window.location.href = "/";
       } else {
-        alert(data.error); // Display error message from backend
+        setError(data.error);
+        // alert(data.error); // Display error message from backend
       }
     } catch (error) {
       console.error("Error:", error);
@@ -83,6 +85,12 @@ const Login = () => {
           >
             Login
           </button>
+
+          {error ? (
+            <div className="text-red-600 font-medium text-md"> {error}</div>
+          ) : (
+            ""
+          )}
         </div>
       </form>
 

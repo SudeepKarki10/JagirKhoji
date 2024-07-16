@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const JobCollection = require("../models/job");
 const requireAuth = require("../middleware/authMiddleware");
+const validation = require("../validation/jobValidation");
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -10,6 +11,7 @@ router.use(express.urlencoded({ extended: true }));
 router.put("/", requireAuth, async (req, res) => {
   try {
     const { id } = req.query;
+    validation.parse(req.body);
     const jobData = req.body;
 
     // Check if the ID is valid

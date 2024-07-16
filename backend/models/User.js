@@ -43,6 +43,10 @@ userSchema.statics.signup = async function (username, email, password) {
     throw new Error("All fields are required");
   }
 
+  if (!username) {
+    throw new Error("Username is required");
+  }
+
   if (!validator.isEmail(email)) {
     throw new Error("Invalid Email");
   }
