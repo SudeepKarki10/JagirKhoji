@@ -82,10 +82,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Sidebar from "./sidebar";
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -123,6 +125,10 @@ const Header = () => {
     router.push("/");
   };
 
+  const toggleSidebar = () => {
+    setIsOpen((x) => !x);
+  };
+
   return (
     <div>
       <header>
@@ -131,7 +137,7 @@ const Header = () => {
             Job Khoji
           </Link>
 
-          <div className="flex gap-2 text-white">
+          <div className="hidden sm:flex gap-2 text-white">
             <Link href="/" className="hover:text-gray-400">
               Home
             </Link>
@@ -140,7 +146,7 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="flex gap-2 *:rounded-md font-medium">
+          <nav className="hidden sm:flex gap-2 *:rounded-md font-medium">
             {!isAuthenticated ? (
               <>
                 <Link
@@ -170,6 +176,22 @@ const Header = () => {
               Post a job
             </Link>
           </nav>
+
+          <button
+            className="flex sm:hidden text-white text-3xl focus:outline-none"
+            onClick={toggleSidebar}
+          >
+            ☰
+          </button>
+          {isOpen ? (
+            <Sidebar
+              isOpen={isOpen}
+              toggleSidebar={toggleSidebar}
+              isAuthenticated={isAuthenticated}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          ) : null}
         </div>
       </header>
     </div>
