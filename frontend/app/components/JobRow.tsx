@@ -37,19 +37,11 @@ const notify = () =>
 const JobRow: React.FC<Props> = ({ job, iconType }) => {
   const router = useRouter();
 
-  const truncateDescription = (
-    positionDescription: string[] | undefined,
-    maxLines: number
-  ) => {
-    if (!positionDescription || positionDescription.length === 0) {
-      return "";
+  const truncateDescription = () => {
+    const description = job.positionDescription[0];
+    if (description.length > 130) {
+      return description.slice(0, 130) + "...";
     }
-
-    // Take the first `maxLines` elements
-    const truncatedLines = positionDescription.slice(0, 1);
-
-    // Join these lines into a single paragraph
-    return truncatedLines.join(" ");
   };
 
   const handleEdit = (e: any) => {
@@ -171,7 +163,7 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
               {job.position}
             </p>
             <p className="overflow-hidden pr-7 text-sm">
-              {truncateDescription(job.positionDescription, 1)}
+              {truncateDescription()}
             </p>
 
             <div className=" mt-2 md:mt-5 flex flex-col flex-grow space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 space-x-0 sm:space-x-2">
