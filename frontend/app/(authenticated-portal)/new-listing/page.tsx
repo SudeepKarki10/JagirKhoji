@@ -65,11 +65,16 @@ export default function NewListingPage() {
       if (response.ok) {
         const result = await response.json();
         console.log("Job data saved :", result);
-        alert("Job data saved ");
-        //reset(); // to reset the form data
-        router.push("/new-listing");
+        toast.success("Job listed successfully");
+        // alert("Job data saved ");
+        setErrors({});
+        reset(); // to reset the form data
+        setTimeout(() => {
+          router.push("/new-listing");
+        }, 3000);
       } else {
         const errorData = await response.json();
+        setErrors(errorData.error);
         console.error("Error saving job data:", errorData.error);
       }
     } catch (error: any) {
@@ -478,6 +483,9 @@ export default function NewListingPage() {
           </div>
 
           <div className="mb-6">
+            {Object.keys(error).length > 0 && (
+              <h5 className="text-red-600">{`${error}`}</h5>
+            )}
             <button
               type="submit"
               className="

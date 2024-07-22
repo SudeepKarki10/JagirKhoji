@@ -25,6 +25,7 @@ const Jobs = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isediteddeleted, setIsEditedDeleted] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -56,7 +57,7 @@ const Jobs = () => {
     };
 
     fetchJobs();
-  }, []);
+  }, [isediteddeleted]);
 
   const calculateUploadedDate = (updatedAt: string): string => {
     const now = new Date();
@@ -105,7 +106,12 @@ const Jobs = () => {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {jobs.map((job) => (
-              <JobRow key={job._id} job={job} iconType="Edit" />
+              <JobRow
+                key={job._id}
+                job={job}
+                iconType="Edit"
+                setIsEditedDeleted={setIsEditedDeleted}
+              />
             ))}
           </div>
         )}

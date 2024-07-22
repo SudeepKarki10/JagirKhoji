@@ -7,24 +7,28 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import EditJobForm from "./EditJobForm";
 
+interface Job {
+  _id: string;
+  companyName: string;
+  companyLocation: string;
+  position: string;
+  positionDescription: string[];
+  jobType: "Remote" | "On-site" | "Hybrid";
+  jobTiming: "Full-time" | "Part-time";
+  companylogoURL?: string;
+  userprofileURL?: string;
+  recruiterName: string;
+  recruiterPhone: string;
+  recruiterEmail: string;
+  user_id: Object;
+  updatedAt: string;
+  uploadedDate: string;
+}
+
 interface Props {
-  job: {
-    _id: Object;
-    companyName: string;
-    companyLocation: string;
-    position: string;
-    positionDescription: string[];
-    jobType: "Remote" | "On-site" | "Hybrid";
-    jobTiming: "Full-time" | "Part-time";
-    companylogoURL?: string;
-    userprofileURL?: string;
-    recruiterName: string;
-    recruiterPhone: string;
-    recruiterEmail: string;
-    uploadedDate: string;
-    user_id: Object;
-  };
+  job: Job;
   iconType: string;
+  setIsEditedDeleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const notify = () =>
@@ -34,7 +38,7 @@ const notify = () =>
     icon: "⏰", // Custom icon for timeout
   });
 
-const JobRow: React.FC<Props> = ({ job, iconType }) => {
+const JobRow: React.FC<Props> = ({ job, iconType, setIsEditedDeleted }) => {
   const router = useRouter();
 
   const truncateDescription = () => {
@@ -46,11 +50,13 @@ const JobRow: React.FC<Props> = ({ job, iconType }) => {
 
   const handleEdit = (e: any) => {
     e.preventDefault();
+    setIsEditedDeleted((x) => !x);
     router.push(`/editjob/${job._id}`);
   };
 
   const handleDelete = async (e: any, job_id: Object) => {
     e.preventDefault();
+    setIsEditedDeleted((x) => !x);
     const token = localStorage.getItem("token");
 
     try {

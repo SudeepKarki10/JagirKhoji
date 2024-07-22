@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const JobCollection = require("../models/job");
 const requireAuth = require("../middleware/authMiddleware");
-const validation = require("../validation/jobValidation");
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -11,7 +10,6 @@ router.use(requireAuth); // Protect all routes below this is extra layer of rout
 
 router.post("/", requireAuth, async (req, res) => {
   try {
-    validation.parse(req.body);
     const jobData = req.body;
     let positionDescription = jobData.positionDescription;
 
@@ -31,7 +29,7 @@ router.post("/", requireAuth, async (req, res) => {
       res.status(400).json({ message: "Invalid job data", data: jobData });
     }
   } catch (error) {
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
